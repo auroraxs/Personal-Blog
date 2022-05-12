@@ -1,0 +1,20 @@
+# 后台访问端口配置
+server:
+  port: 8081
+
+# 数据库连接配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/moyu_blog
+#    url: jdbc:mysql://42.192.235.175:3306/moyu_blog
+    username: root
+    password: sunxusen
+
+# mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  # 定位mapper文件的位置，当xml文件和mapper接口路径一致时可以不用配置
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 标准日志输出
+    map-underscore-to-camel-case: true  # 开启下划线转驼峰
+  type-aliases-package: com.moyu.pojo # 实体类起别名

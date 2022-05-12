@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--绑定UserMapper接口-->
+<mapper namespace="com.moyu.mapper.UserMapper">
+
+<!--    查询所有用户-->
+    <select id="selectAll" resultType="com.moyu.pojo.User">
+        select * from t_user
+    </select>
+
+<!--    分页查询-->
+    <select id="selectPage" resultType="com.moyu.pojo.User">
+        select * from t_user
+        <where>
+            <if test="username != ''">
+                username like "%"#{username}"%"
+            </if>
+            <if test="role != ''">
+                and role like "%"#{role}"%"
+            </if>
+        </where>
+        limit #{pageNum}, #{pageSize}
+    </select>
+
+<!--    根据Id查询用户-->
+    <select id="selectById" resultType="com.moyu.pojo.User">
+        select * from t_user where id=#{id}
+    </select>
+
+<!--    查询该表总数据条数-->
+    <select id="selectCount" resultType="int">
+        select count(*) from t_user
+        <where>
+            <if test="username != ''">
+                username like "%"#{username}"%"
+            </if>
+            <if test="role != ''">
+                and role like "%"#{role}"%"
+            </if>
+        </where>
+    </select>
+
+<!--    插入一条数据-->
+    <insert id="insertOne" parameterType="com.moyu.pojo.User">
+        insert into t_user(id, username, password, nickname, avatar, role)
+        values (#{id}, #{username}, #{password}, #{nickname}, #{avatar}, #{role})
+    </insert>
+
+<!--    根据Id更新数据-->
+    <update id="updateOne" parameterType="com.moyu.pojo.User">
+        update t_user
+        <set>
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="nickname != null">
+                nickname=#{nickname},
+            </if>
+            <if test="avatar != null">
+                avatar=#{avatar},
+            </if>
+            <if test="role != null">
+                role=#{role}
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+<!--    根据Id删除数据-->
+    <delete id="deleteById">
+        delete from t_user where id=#{id}
+    </delete>
+
+</mapper>

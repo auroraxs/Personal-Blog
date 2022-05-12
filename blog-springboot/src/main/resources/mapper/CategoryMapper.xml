@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyu.mapper.CategoryMapper">
+
+    <insert id="insertOne">
+        insert into t_category(id, name) values (#{id}, #{name})
+    </insert>
+
+    <update id="updateOne">
+        update t_category
+        <set>
+            <if test="name != null">
+                name = #{name}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="deleteById">
+        delete from t_category where id = #{id}
+    </delete>
+
+    <select id="selectAll" resultType="Category">
+        select * from t_category
+    </select>
+
+    <select id="selectById" resultType="Category" parameterType="string">
+        select * from t_category where id = #{id}
+    </select>
+
+    <select id="selectPage" resultType="Category">
+        select * from t_category
+        <where>
+            <if test="categoryName != null">
+                name like "%"#{categoryName}"%"
+            </if>
+        </where>
+        limit #{currPage}, #{pageSize}
+    </select>
+    <select id="selectCount" resultType="int">
+        select count(*) from t_category
+        <where>
+            <if test="categoryName != null">
+                name like "%"#{categoryName}"%"
+            </if>
+        </where>
+    </select>
+</mapper>

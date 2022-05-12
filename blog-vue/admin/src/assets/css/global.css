@@ -1,0 +1,23 @@
+/* 去掉body的边框，让body充满整个屏幕 */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* 设置高度100%，撑满整个屏幕*/
+html, body {
+    height: 100%;
+}
+
+/* 设置统一class */
+.ml-5 {
+    margin-left: 5px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.pd-10 {
+    padding: 10px;
+}

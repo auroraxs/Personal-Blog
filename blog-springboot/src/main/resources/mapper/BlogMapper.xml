@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyu.mapper.BlogMapper">
+
+    <insert id="insertOne">
+        insert into t_blog (id, title, description, content, views, published, create_time, title_image, category_id, user_id)
+        values (#{id}, #{title}, #{description}, #{content}, #{views}, #{published}, #{createTime}, #{titleImage}, #{category.id}, #{user.id});
+    </insert>
+    <update id="updateOne">
+        update t_blog
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="views != null">
+                views = #{views},
+            </if>
+            <if test="published != null">
+                published = #{published},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="titleImage != null">
+                title_image = #{titleImage},
+            </if>
+            <if test="category != null">
+                category_id = #{category.id},
+            </if>
+            <if test="user != null">
+                user_id = #{user.id}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="deleteById">
+        delete from t_blog where id = #{id}
+    </delete>
+
+    <select id="selectAll" resultMap="BlogsResultMap">
+        select tb.id blog_id,
+               tb.title blog_title,
+               tb.description blog_description,
+               tb.content blog_content,
+               tb.views blog_views,
+               tb.published blog_published,
+               tb.create_time blog_create_time,
+               tb.title_image blog_title_image,
+               tc.id category_id,
+               tc.name category_name,
+               tu.id user_id,
+               tu.username user_username
+        from t_blog tb
+            left outer join t_category tc on tb.category_id = tc.id
+            left outer join t_user tu on tb.user_id = tu.id
+        order by blog_create_time desc
+    </select>
+
+    <resultMap id="BlogsResultMap" type="Blog">
+        <id property="id" column="blog_id"></id>
+        <result property="title" column="blog_title"></result>
+        <result property="description" column="blog_description"></result>
+        <result property="content" column="blog_content"></result>
+        <result property="views" column="blog_views"></result>
+        <result property="published" column="blog_published"></result>
+        <result property="createTime" column="blog_create_time"></result>
+        <result property="titleImage" column="blog_title_image"></result>
+        <association property="category" javaType="Category">
+            <id property="id" column="category_id"></id>
+            <result property="name" column="category_name"></result>
+        </association>
+        <association property="user" javaType="com.moyu.pojo.User">
+            <id property="id" column="user_id"></id>
+            <result property="username" column="user_username"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectById" resultMap="BlogResultMap">
+        select tb.id blog_id,
+               tb.title blog_title,
+               tb.description blog_description,
+               tb.content blog_content,
+               tb.views blog_views,
+               tb.published blog_published,
+               tb.create_time blog_create_time,
+               tc.id category_id,
+               tc.name category_name,
+               tu.id user_id,
+               tu.username user_username,
+               tu.nickname user_nickname,
+               tu.avatar user_avatar,
+               tu.role user_role
+        from t_blog tb
+            left outer join t_category tc on tb.category_id = tc.id
+            left outer join t_user tu on tb.user_id = tu.id
+        where tb.id = #{id}
+    </select>
+
+    <select id="selectPage" resultMap="BlogsResultMap">
+        select tb.id blog_id,
+               tb.title blog_title,
+               tb.description blog_description,
+               tb.content blog_content,
+               tb.views blog_views,
+               tb.published blog_published,
+               tb.create_time blog_create_time,
+               tb.title_image blog_title_image,
+               tc.id category_id,
+               tc.name category_name,
+               tu.id user_id,
+               tu.username user_username
+        from t_blog tb
+                 left outer join t_category tc on tb.category_id = tc.id
+                 left outer join t_user tu on tb.user_id = tu.id
+        <where>
+            <if test="title != null">
+                title like "%"#{title}"%"
+            </if>
+        </where>
+        limit #{currentPage}, #{pageSize}
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(*) from t_blog
+        <where>
+            <if test="title != null">
+                title like "%"#{title}"%"
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="BlogResultMap" type="Blog">
+        <id property="id" column="blog_id"/>
+        <result property="title" column="blog_title"/>
+        <result property="description" column="blog_description"/>
+        <result property="content" column="blog_content"/>
+        <result property="views" column="blog_views"/>
+        <result property="published" column="blog_published"/>
+        <result property="createTime" column="blog_create_time"/>
+        <association property="category" javaType="Category">
+            <id property="id" column="category_id"/>
+            <result property="name" column="category_name"/>
+        </association>
+        <association property="user" javaType="User">
+            <id property="id" column="user_id"/>
+            <result property="username" column="user_username"/>
+            <result property="nickname" column="user_nickname"/>
+            <result property="avatar" column="user_avatar"/>
+            <result property="role" column="user_role"/>
+        </association>
+    </resultMap>
+
+</mapper>
