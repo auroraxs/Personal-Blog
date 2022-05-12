@@ -1,6 +1,3 @@
----
-typora-root-url: ./imgs
----
 
 # 前言
 该项目是一个基于springboot和vue的前后端分离的个人博客系统，整个项目没有使用到非常复杂的技术，后端基本上就是一个增删改查的功能，前端是一个展示的功能。如果想学习springboot和vue框架，那么该项目是一个非常适合的入门级练手项目。下面的内容我将介绍一下网站的整体情况、以及搭建这样一个网站需要用到哪些具体的技术（附学习链接），并分享我在搭建该网站时的一个学习路线规划。
@@ -12,19 +9,17 @@ typora-root-url: ./imgs
 
 **前台效果图**
 
-<img src="/home.png" style="zoom:50%;" />
+![](./imgs/home.png)
 
-<img src="/detail.png" style="zoom:50%;" />
+![](./imgs/detail.png)
 
-![](/category.png)
+![](./imgs/category.png)
 
-![](/category.png)
-
-![](/about.png)
+![](./imgs/about.png)
 
 **后台效果图**
 
-![](/back.png)
+![](./imgs/back.png)
 
 # 所需技术
 
@@ -62,6 +57,7 @@ typora-root-url: ./imgs
 - Element ui：[官方文档](https://element.eleme.cn/#/zh-CN/component/installation)
 
 上述视频教程都是我亲自听过并筛选出来的，老师讲的都非常通俗易懂，相信大家看完也能够有所收获！
+另：我的个人笔记也附在仓库中了，见notes目录。
 
 # 总结
 
